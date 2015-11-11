@@ -37,7 +37,7 @@ from ._gradient_boosting import predict_stages
 from ._gradient_boosting import predict_stage
 from ._gradient_boosting import _random_sample_mask
 
-import numbers
+import six
 import numpy as np
 
 from scipy import stats
@@ -862,7 +862,7 @@ class BaseGradientBoosting(six.with_metaclass(ABCMeta, BaseEnsemble,
                                  "or 'log2'." % self.max_features)
         elif self.max_features is None:
             max_features = self.n_features
-        elif isinstance(self.max_features, (numbers.Integral, np.integer)):
+        elif isinstance(self.max_features, six.integer_types):
             max_features = self.max_features
         else:  # float
             if 0. < self.max_features <= 1.:

@@ -16,7 +16,7 @@ randomized trees. Single and multi-output problems are both handled.
 from __future__ import division
 
 
-import numbers
+import six
 from abc import ABCMeta
 from abc import abstractmethod
 from math import ceil
@@ -211,12 +211,12 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator,
         max_leaf_nodes = (-1 if self.max_leaf_nodes is None
                           else self.max_leaf_nodes)
 
-        if isinstance(self.min_samples_leaf, (numbers.Integral, np.integer)):
+        if isinstance(self.min_samples_leaf, six.integer_types):
             min_samples_leaf = self.min_samples_leaf
         else:  # float
             min_samples_leaf = int(ceil(self.min_samples_leaf * n_samples))
 
-        if isinstance(self.min_samples_split, (numbers.Integral, np.integer)):
+        if isinstance(self.min_samples_split, six.integer_types):
             min_samples_split = self.min_samples_split
         else:  # float
             min_samples_split = int(ceil(self.min_samples_split * n_samples))
@@ -240,7 +240,7 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator,
                     'values are "auto", "sqrt" or "log2".')
         elif self.max_features is None:
             max_features = self.n_features_
-        elif isinstance(self.max_features, (numbers.Integral, np.integer)):
+        elif isinstance(self.max_features, six.integer_types):
             max_features = self.max_features
         else:  # float
             if self.max_features > 0.0:
@@ -269,7 +269,7 @@ class BaseDecisionTree(six.with_metaclass(ABCMeta, BaseEstimator,
             raise ValueError("max_depth must be greater than zero. ")
         if not (0 < max_features <= self.n_features_):
             raise ValueError("max_features must be in (0, n_features]")
-        if not isinstance(max_leaf_nodes, (numbers.Integral, np.integer)):
+        if not isinstance(max_leaf_nodes, six.integer_types):
             raise ValueError("max_leaf_nodes must be integral number but was "
                              "%r" % max_leaf_nodes)
         if -1 < max_leaf_nodes < 2:

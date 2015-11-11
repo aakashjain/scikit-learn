@@ -6,7 +6,7 @@
 from __future__ import division
 
 import itertools
-import numbers
+import six
 import numpy as np
 from warnings import warn
 from abc import ABCMeta, abstractmethod
@@ -40,11 +40,11 @@ def _parallel_build_estimators(n_estimators, ensemble, X, y, sample_weight,
     n_samples, n_features = X.shape
     max_features = ensemble.max_features
 
-    if (not isinstance(max_samples, (numbers.Integral, np.integer)) and
+    if (not isinstance(max_samples, six.integer_types) and
             (0.0 < max_samples <= 1.0)):
         max_samples = int(max_samples * n_samples)
 
-    if (not isinstance(max_features, (numbers.Integral, np.integer)) and
+    if (not isinstance(max_features, six.integer_types) and
             (0.0 < max_features <= 1.0)):
         max_features = int(max_features * n_features)
 
@@ -297,13 +297,13 @@ class BaseBagging(with_metaclass(ABCMeta, BaseEnsemble)):
             self.base_estimator_.max_depth = max_depth
 
         # if max_samples is float:
-        if not isinstance(max_samples, (numbers.Integral, np.integer)):
+        if not isinstance(max_samples, six.integer_types):
             max_samples = int(max_samples * X.shape[0])
 
         if not (0 < max_samples <= X.shape[0]):
             raise ValueError("max_samples must be in (0, n_samples]")
 
-        if isinstance(self.max_features, (numbers.Integral, np.integer)):
+        if isinstance(self.max_features, six.integer_types):
             max_features = self.max_features
         else:  # float
             max_features = int(self.max_features * self.n_features_)

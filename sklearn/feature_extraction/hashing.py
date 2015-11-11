@@ -89,6 +89,8 @@ class FeatureHasher(BaseEstimator, TransformerMixin):
     def _validate_params(n_features, input_type):
         # strangely, np.int16 instances are not instances of Integral,
         # while np.int64 instances are...
+        # six.integer_types was not used here, because it works with
+        # np.int64 but not np.int16
         if not isinstance(n_features, (numbers.Integral, np.integer)):
             raise TypeError("n_features must be integral, got %r (%s)."
                             % (n_features, type(n_features)))

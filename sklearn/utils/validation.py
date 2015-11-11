@@ -7,7 +7,7 @@
 #          Nicolas Tresegnie
 # License: BSD 3 clause
 import warnings
-import numbers
+import six
 
 import numpy as np
 import scipy.sparse as sp
@@ -574,7 +574,7 @@ def check_random_state(seed):
     """
     if seed is None or seed is np.random:
         return np.random.mtrand._rand
-    if isinstance(seed, (numbers.Integral, np.integer)):
+    if isinstance(seed, six.integer_types):
         return np.random.RandomState(seed)
     if isinstance(seed, np.random.RandomState):
         return seed

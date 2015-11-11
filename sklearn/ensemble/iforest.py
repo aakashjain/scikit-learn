@@ -4,7 +4,7 @@
 
 from __future__ import division
 
-import numbers
+import six
 import numpy as np
 from warnings import warn
 
